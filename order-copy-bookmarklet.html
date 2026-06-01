@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>受注情報コピー ブックマークレット</title>
+<style>
+  :root {
+    --bg: #0f1117; --bg2: #181c27; --bg3: #1e2333;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+    --text: #e8eaf0; --text2: #8b90a0; --text3: #4a5068;
+    --accent: #4f7cff; --accent-bg: rgba(79,124,255,0.12); --accent-bd: rgba(79,124,255,0.32);
+    --green: #22c55e; --green-bg: rgba(34,197,94,0.1); --green-bd: rgba(34,197,94,0.3);
+    --r: 6px; --r2: 4px;
+    --font: 'Segoe UI','Hiragino Sans','Yu Gothic UI',sans-serif;
+    --mono: 'Cascadia Code','Consolas',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);padding:32px 24px;font-size:14px;line-height:1.6;}
+  .wrap{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:24px;}
+
+  /* Header */
+  .header{border-bottom:1px solid var(--border);padding-bottom:16px;}
+  .header h1{font-size:18px;font-weight:600;margin-bottom:4px;}
+  .header p{font-size:13px;color:var(--text2);}
+
+  /* Step */
+  .step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;}
+  .step-title{font-size:13px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+
+  /* Code block */
+  .code-wrap{position:relative;}
+  .code-block{
+    background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);
+    padding:14px 16px;font-family:var(--mono);font-size:11px;color:#a8d8a8;
+    word-break:break-all;white-space:pre-wrap;line-height:1.7;
+    max-height:160px;overflow-y:auto;
+  }
+  .copy-btn{
+    position:absolute;top:8px;right:8px;
+    background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-bd);
+    border-radius:var(--r2);padding:4px 12px;font-size:12px;cursor:pointer;
+    font-family:var(--font);transition:all .15s;
+  }
+  .copy-btn:hover{background:rgba(79,124,255,.22);}
+  .copy-btn.ok{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+
+  /* Steps list */
+  ol{padding-left:20px;display:flex;flex-direction:column;gap:8px;}
+  ol li{font-size:13px;color:var(--text2);padding-left:4px;}
+  ol li strong{color:var(--text);}
+
+  /* Info list */
+  .info-list{display:flex;flex-direction:column;gap:6px;}
+  .info-row{display:flex;align-items:flex-start;gap:10px;font-size:13px;}
+  .info-label{color:var(--text3);min-width:80px;flex-shrink:0;}
+  .info-val{color:var(--text2);}
+
+  /* Note */
+  .note{font-size:12px;color:var(--text3);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>⚡ 受注情報コピー — ブックマークレット</h1>
+    <p>受注管理画面を開いた状態で実行すると、受注情報をクリップボードにコピーします。</p>
+  </div>
+
+  <!-- Step 1: コード -->
+  <div class="step">
+    <div class="step-title">Step 1 — コードをコピー</div>
+    <div class="code-wrap">
+      <div class="code-block" id="bml-code">javascript:(function(){function t(el){return el?el.textContent.trim().replace(/\s+/g,' '):'';} var orderEl=document.querySelector('.pull-left li');var order=t(orderEl);var nameEls=document.querySelectorAll('.rms-content-order-details-contact-info-names');var buyer=nameEls[0]?t(nameEls[0]):'';var wrapper=document.querySelector('.rms-row-wrapper');var recipient=wrapper?t(wrapper.querySelector('.rms-content-order-details-contact-info-names')):'';var address=wrapper?t(wrapper.querySelector('.address')):'';var phone=wrapper?t(wrapper.querySelector('.phone')):'';var lines=[];if(order)lines.push('受注番号: '+order);if(buyer)lines.push('注文者: '+buyer);if(recipient)lines.push('送付先: '+recipient);if(address)lines.push('住所: '+address);if(phone)lines.push('電話: '+phone);var text=lines.join('\n');navigator.clipboard.writeText(text).then(function(){var d=document.createElement('div');d.textContent='\u2713 \u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f';d.style.cssText='position:fixed;top:20px;right:20px;background:#0f1117;color:#4f7cff;border:1px solid #4f7cff;padding:10px 18px;border-radius:6px;font-size:14px;z-index:99999;font-family:sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.4);';document.body.appendChild(d);setTimeout(function(){d.remove();},2000);}).catch(function(){alert(text);});})();</div>
+      <button class="copy-btn" id="copy-code-btn" onclick="copyCode()">コピー</button>
+    </div>
+  </div>
+
+  <!-- Step 2: ブックマーク登録方法 -->
+  <div class="step">
+    <div class="step-title">Step 2 — ブックマークバーに登録</div>
+    <ol>
+      <li>Chromeのブックマークバーを表示（<strong>Ctrl+Shift+B</strong>）</li>
+      <li>ブックマークバーの空白部分を<strong>右クリック → 「ページを追加」</strong></li>
+      <li><strong>名前</strong>に「受注コピー」などと入力</li>
+      <li><strong>URL</strong>欄に、上でコピーしたコードを貼り付け</li>
+      <li>「保存」をクリック</li>
+    </ol>
+    <p class="note">※ ブックマークバーが見えない場合は Ctrl+Shift+B で表示できます。</p>
+  </div>
+
+  <!-- Step 3: 使い方 -->
+  <div class="step">
+    <div class="step-title">Step 3 — 使い方</div>
+    <ol>
+      <li>受注管理システムで<strong>対象の受注詳細ページ</strong>を開く</li>
+      <li>ブックマークバーの「<strong>受注コピー</strong>」をクリック</li>
+      <li>右上に「✓ コピーしました」と表示されたら完了</li>
+      <li>貼り付けたいところで <strong>Ctrl+V</strong></li>
+    </ol>
+  </div>
+
+  <!-- コピーされる内容 -->
+  <div class="step">
+    <div class="step-title">コピーされる内容</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-label">受注番号</span><span class="info-val">.pull-left の li テキスト</span></div>
+      <div class="info-row"><span class="info-label">注文者</span><span class="info-val">.rms-content-order-details-contact-info-names（1つ目）</span></div>
+      <div class="info-row"><span class="info-label">送付先</span><span class="info-val">.rms-row-wrapper 内の同クラス</span></div>
+      <div class="info-row"><span class="info-label">住所</span><span class="info-val">.rms-row-wrapper 内の .address</span></div>
+      <div class="info-row"><span class="info-label">電話番号</span><span class="info-val">.rms-row-wrapper 内の .phone</span></div>
+    </div>
+    <p class="note">※ 取得できなかった項目は自動的にスキップされます。メーカー情報は後日追加予定。</p>
+  </div>
+
+</div>
+
+<script>
+function copyCode() {
+  var code = document.getElementById('bml-code').textContent;
+  var btn  = document.getElementById('copy-code-btn');
+  navigator.clipboard.writeText(code).then(function() {
+    btn.textContent = '✓ コピー済み';
+    btn.classList.add('ok');
+    setTimeout(function(){ btn.textContent='コピー'; btn.classList.remove('ok'); }, 2000);
+  }).catch(function() {
+    // フォールバック
+    var ta = document.createElement('textarea');
+    ta.value = code;
+    ta.style.cssText = 'position:fixed;left:-9999px;';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    btn.textContent = '✓ コピー済み';
+    btn.classList.add('ok');
+    setTimeout(function(){ btn.textContent='コピー'; btn.classList.remove('ok'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
