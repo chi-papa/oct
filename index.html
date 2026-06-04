@@ -11,30 +11,20 @@
 /*
   タイポグラフィ階層
   ──────────────────────────────────────
-  Lv1 — ロゴ        : Barlow Condensed 200  最も細い・軽い存在感
-  Lv2 — セクション見出し: Noto Serif JP 600   最も太い・最重要
-  Lv3 — 手順本文      : Noto Sans JP 400     読むテキスト・標準
-  Lv4 — strong/ラベル : Noto Sans JP 500     本文より一段上
-  Lv5 — バッジ/メタ   : DM Mono 400         機能的・補助情報
-  Lv6 — 注釈/フッター  : Noto Sans JP 400 + 薄色  最も控えめ
-  ──────────────────────────────────────
-  色で重要度を補強:
-    --ink        → 最重要（見出し・strong）
-    --ink-mid    → 標準（本文）
-    --ink-light  → 補助（ラベル・メタ）
-    --ink-faint  → 最小（注釈・フッター）
-    --terra      → アクセント（行動・注目点）のみ
+  Lv1 — ロゴ           : Barlow Condensed 200
+  Lv2 — セクション見出し : Noto Serif JP 600
+  Lv3 — 手順本文        : Noto Sans JP 400
+  Lv4 — strong/ラベル  : Noto Sans JP 500
+  Lv5 — バッジ/コード   : DM Mono 400
+  Lv6 — 注釈/フッター   : Noto Sans JP 400 + 薄色
 */
-
 :root {
   --ivory:     #f8f4ed;
-  --paper:     #fdfaf5;
   --ink:       #2c2418;
   --ink-mid:   #5a4e3a;
   --ink-light: #9c8c72;
   --ink-faint: #c8b99a;
   --terra:     #b85c38;
-  --terra-mid: #d4775a;
   --terra-bg:  rgba(184,92,56,0.08);
   --terra-bd:  rgba(184,92,56,0.25);
   --sage:      #4a7c59;
@@ -51,265 +41,122 @@
   --display: 'Barlow Condensed','Arial Narrow',sans-serif;
   --r: 8px; --r2: 5px; --r3: 3px;
 }
-
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-
 body {
-  font-family: var(--sans);
-  font-weight: 400;           /* Lv3ベース */
-  background: var(--ivory);
-  color: var(--ink-mid);      /* 本文はmid。見出しだけinkに上げる */
-  min-height: 100vh;
-  padding: 48px 24px 72px;
-  font-size: 14px;
-  line-height: 1.75;
+  font-family: var(--sans); font-weight: 400;
+  background: var(--ivory); color: var(--ink-mid);
+  min-height: 100vh; padding: 48px 24px 72px;
+  font-size: 14px; line-height: 1.75;
   background-image:
     radial-gradient(ellipse at 15% 0%,   rgba(245,237,224,0.7) 0%, transparent 55%),
     radial-gradient(ellipse at 85% 100%, rgba(232,218,196,0.5) 0%, transparent 50%);
 }
-
 .wrap { max-width: 660px; margin: 0 auto; display: flex; flex-direction: column; }
 
-/* =====================================================
-   Lv1 — OCT ロゴ（最細・軽い存在感）
-===================================================== */
+/* Logo */
 .logo-block {
-  display: flex;
-  align-items: flex-end;
-  gap: 16px;
-  margin-bottom: 28px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--ink-faint);
-  position: relative;
+  display: flex; align-items: flex-end; gap: 16px;
+  margin-bottom: 28px; padding-bottom: 28px;
+  border-bottom: 1px solid var(--ink-faint); position: relative;
 }
 .logo-mark {
-  font-family: var(--display);
-  font-weight: 200;           /* Lv1: 最細 */
-  font-size: 56px;
-  line-height: 1;
-  letter-spacing: .1em;
-  color: var(--terra);
-  user-select: none;
+  font-family: var(--display); font-weight: 200; font-size: 56px;
+  line-height: 1; letter-spacing: .1em; color: var(--terra); user-select: none;
 }
-.logo-text-group {
-  display: flex; flex-direction: column; gap: 3px;
-  padding-bottom: 7px;
-}
+.logo-text-group { display: flex; flex-direction: column; gap: 3px; padding-bottom: 7px; }
 .logo-fullname {
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--ink-faint);    /* 最も控えめ */
-  line-height: 1;
+  font-family: var(--mono); font-weight: 400; font-size: 10px;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); line-height: 1;
 }
-.logo-sub {
-  font-family: var(--sans);
-  font-weight: 400;           /* Lv3 */
-  font-size: 12.5px;
-  color: var(--ink-light);    /* 補助色 */
-  line-height: 1.45;
-}
+.logo-sub { font-family: var(--sans); font-weight: 400; font-size: 12.5px; color: var(--ink-light); line-height: 1.45; }
 .logo-block::after {
-  content: '';
-  position: absolute; bottom: -1px; left: 0;
-  width: 48px; height: 2px;
-  background: var(--terra); border-radius: 1px;
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 48px; height: 2px; background: var(--terra); border-radius: 1px;
 }
 
-/* =====================================================
-   Section
-===================================================== */
-.section {
-  padding: 26px 0;
-  border-bottom: 1px solid var(--border);
-}
+/* Section */
+.section { padding: 26px 0; border-bottom: 1px solid var(--border); }
 .section:last-child { border-bottom: none; }
-
-.section-header {
-  display: flex; align-items: baseline; gap: 11px;
-  margin-bottom: 16px;
-}
-
-/* Lv5 — バッジ（機能的ラベル） */
+.section-header { display: flex; align-items: baseline; gap: 11px; margin-bottom: 16px; }
 .step-badge {
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 10px;
-  letter-spacing: .12em;
-  color: var(--surface);
-  background: var(--terra);
-  padding: 2px 9px;
-  border-radius: 999px;
-  flex-shrink: 0;
+  font-family: var(--mono); font-weight: 400; font-size: 10px;
+  letter-spacing: .12em; color: var(--surface); background: var(--terra);
+  padding: 2px 9px; border-radius: 999px; flex-shrink: 0;
 }
+.section-title { font-family: var(--serif); font-weight: 600; font-size: 15px; color: var(--ink); letter-spacing: .02em; }
 
-/* Lv2 — セクション見出し（最重要・最太） */
-.section-title {
-  font-family: var(--serif);
-  font-weight: 600;           /* Lv2: 最太 */
-  font-size: 15px;
-  color: var(--ink);          /* 最濃色 */
-  letter-spacing: .02em;
-}
-
-/* =====================================================
-   Code Block
-===================================================== */
+/* Code block */
 .code-wrap { position: relative; }
 .code-block {
-  background: var(--ink);
-  border-radius: var(--r);
+  background: var(--ink); border-radius: var(--r);
   padding: 16px 18px; padding-right: 90px;
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 11px;
-  color: #d4c9b0;
-  word-break: break-all; white-space: pre-wrap;
-  line-height: 1.8; max-height: 140px; overflow-y: auto;
-  box-shadow: var(--shadow-md);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.14) transparent;
+  font-family: var(--mono); font-weight: 400; font-size: 11px; color: #d4c9b0;
+  word-break: break-all; white-space: pre-wrap; line-height: 1.8;
+  max-height: 140px; overflow-y: auto; box-shadow: var(--shadow-md);
+  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.14) transparent;
 }
 .code-block::-webkit-scrollbar { width: 4px; }
 .code-block::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 2px; }
-
 .copy-btn {
   position: absolute; top: 10px; right: 10px;
-  background: var(--terra-bg); color: var(--terra);
-  border: 1px solid var(--terra-bd); border-radius: var(--r2);
-  padding: 5px 14px;
-  font-family: var(--sans); font-weight: 500; font-size: 12px; /* Lv4 */
+  background: var(--terra-bg); color: var(--terra); border: 1px solid var(--terra-bd);
+  border-radius: var(--r2); padding: 5px 14px;
+  font-family: var(--sans); font-weight: 500; font-size: 12px;
   cursor: pointer; transition: all .18s ease; white-space: nowrap;
 }
 .copy-btn:hover { background: var(--terra); color: #fff; border-color: var(--terra); }
 .copy-btn.ok    { background: var(--sage-bg); color: var(--sage); border-color: var(--sage-bd); }
 
-/* =====================================================
-   Steps List
-===================================================== */
-.steps-list {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 0;
-  counter-reset: step-counter;
-}
+/* Steps list */
+.steps-list { list-style: none; display: flex; flex-direction: column; counter-reset: step-counter; }
 .steps-list li {
   counter-increment: step-counter;
   display: flex; align-items: flex-start; gap: 14px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  font-family: var(--sans);
-  font-weight: 400;           /* Lv3 */
-  font-size: 13.5px;
-  color: var(--ink-mid);
-  line-height: 1.65;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-family: var(--sans); font-weight: 400; font-size: 13.5px; color: var(--ink-mid); line-height: 1.65;
 }
 .steps-list li:last-child { border-bottom: none; }
 .steps-list li::before {
   content: counter(step-counter);
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 11px;
-  color: var(--terra);
-  background: var(--terra-bg);
-  border: 1px solid var(--terra-bd);
-  border-radius: 999px;
-  min-width: 22px; height: 22px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
+  font-family: var(--mono); font-weight: 400; font-size: 11px;
+  color: var(--terra); background: var(--terra-bg); border: 1px solid var(--terra-bd);
+  border-radius: 999px; min-width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
 }
-/* Lv4 — strong は本文より一段上 */
-.steps-list li strong {
-  font-weight: 500;
-  color: var(--ink);
-}
-
+.steps-list li strong { font-weight: 500; color: var(--ink); }
 kbd {
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 11px;
-  color: var(--ink-mid);
-  background: var(--surface);
-  border: 1px solid var(--border-md);
-  border-radius: var(--r3); padding: 1px 6px;
-  box-shadow: 0 1px 0 var(--border-md); white-space: nowrap;
+  font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-mid);
+  background: var(--surface); border: 1px solid var(--border-md);
+  border-radius: var(--r3); padding: 1px 6px; box-shadow: 0 1px 0 var(--border-md); white-space: nowrap;
 }
 
-/* =====================================================
-   Info Table
-===================================================== */
+/* Info table */
 .info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .info-table tr { border-bottom: 1px solid var(--border); }
 .info-table tr:last-child { border-bottom: none; }
 .info-table td { padding: 9px 4px; vertical-align: top; line-height: 1.6; }
-.info-table td:first-child {
-  font-family: var(--sans);
-  font-weight: 500;           /* Lv4 — ラベルは一段上 */
-  color: var(--ink-mid);
-  white-space: nowrap; padding-right: 20px; min-width: 80px;
-}
-.info-table td:last-child {
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 11.5px;
-  color: var(--ink-light);    /* 補助色 */
-}
+.info-table td:first-child { font-weight: 500; color: var(--ink-light); white-space: nowrap; padding-right: 16px; min-width: 60px; }
+.info-table td:nth-child(2) { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mid); padding-right: 20px; }
+.info-table td:nth-child(3) { font-weight: 500; color: var(--ink-light); white-space: nowrap; padding-right: 16px; min-width: 60px; }
+.info-table td:nth-child(4) { font-family: var(--mono); font-size: 11.5px; color: var(--ink-light); }
 
-/* =====================================================
-   Preview Box
-===================================================== */
+/* Preview */
 .preview-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--terra);
-  border-radius: 0 var(--r2) var(--r2) 0;
-  padding: 14px 18px;
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 12.5px;
-  color: var(--ink-mid); line-height: 2;
-  box-shadow: var(--shadow-sm);
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--terra); border-radius: 0 var(--r2) var(--r2) 0;
+  padding: 14px 18px; font-family: var(--mono); font-weight: 400; font-size: 12px;
+  color: var(--ink-mid); line-height: 2; box-shadow: var(--shadow-sm);
+  overflow-x: auto; white-space: nowrap;
 }
+.preview-box .tab-arrow { color: var(--ink-faint); font-size: 10px; margin: 0 3px; }
 
-/* =====================================================
-   Lv6 — 注釈・フッター（最も控えめ）
-===================================================== */
-.note {
-  font-family: var(--sans);
-  font-weight: 400;
-  font-size: 12px;
-  color: var(--ink-faint);    /* 最薄色 */
-  margin-top: 14px; padding-top: 12px;
-  border-top: 1px dashed var(--ink-faint); line-height: 1.7;
-}
-.footer {
-  margin-top: 44px; padding-top: 20px;
-  border-top: 1px solid var(--ink-faint);
-  display: flex; align-items: center; justify-content: space-between;
-}
+/* Note / Footer */
+.note { font-size: 12px; color: var(--ink-faint); margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--ink-faint); line-height: 1.7; }
+.footer { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--ink-faint); display: flex; align-items: center; justify-content: space-between; }
 .footer-left { display: flex; align-items: center; gap: 10px; }
-.footer-logo {
-  font-family: var(--display);
-  font-weight: 200;           /* Lv1と同じ */
-  font-size: 18px;
-  letter-spacing: .1em;
-  color: var(--terra);
-  line-height: 1;
-}
-.footer-ver {
-  font-family: var(--mono);
-  font-weight: 400;           /* Lv5 */
-  font-size: 11px;
-  color: var(--ink-faint);    /* 最薄 */
-  letter-spacing: .06em;
-}
-.footer-right {
-  font-family: var(--mono);
-  font-weight: 400;
-  font-size: 11px;
-  color: var(--ink-faint);
-}
+.footer-logo { font-family: var(--display); font-weight: 200; font-size: 18px; letter-spacing: .1em; color: var(--terra); line-height: 1; }
+.footer-ver  { font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-faint); letter-spacing: .06em; }
+.footer-right { font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-faint); }
 </style>
 </head>
 <body>
@@ -323,17 +170,94 @@ kbd {
     </div>
   </div>
 
+  <!-- STEP 1 -->
   <div class="section">
     <div class="section-header">
       <span class="step-badge">STEP 1</span>
       <span class="section-title">コードをコピーする</span>
     </div>
     <div class="code-wrap">
-      <div class="code-block" id="bml-code">javascript:(function(){function t(el){return el?el.textContent.trim().replace(/\s+/g,' '):'';}var order=t(document.querySelector('.pull-left li'));var buyerBlock=document.querySelector('[class*="rms-content-order-details-block-right"]')||document.querySelector('[class*="rms-content-order-details-block"]');var allBlocks=Array.from(document.querySelectorAll('[class*="rms-content-order-details-block"]'));var shipBlock=allBlocks.find(function(el){return el!==buyerBlock;});function extract(block){if(!block)return{fullname:'',furigana:'',address:'',phone:''};var opts=block.querySelector('.rms-content-order-details-contact-options');return{fullname:t(block.querySelector('.fullname')),furigana:t(block.querySelector('.furigana')),address:t(opts?opts.querySelector('.address'):block.querySelector('.address')),phone:t(opts?opts.querySelector('.phone'):block.querySelector('.phone'))};}var buyer=extract(buyerBlock);var ship=extract(shipBlock);var cells=[];cells.push('\u53d7\u6ce8\u756a\u53f7:',order);cells.push('\u6ce8\u6587\u8005:',buyer.fullname);cells.push('\u6ce8\u6587\u8005\uff08\u30ab\u30ca\uff09:',buyer.furigana);cells.push('\u6ce8\u6587\u8005\u4f4f\u6240:',buyer.address);cells.push('\u6ce8\u6587\u8005\u96fb\u8a71:',buyer.phone);cells.push('\u9001\u4ed8\u5148:',ship.fullname);cells.push('\u9001\u4ed8\u5148\uff08\u30ab\u30ca\uff09:',ship.furigana);cells.push('\u9001\u4ed8\u5148\u4f4f\u6240:',ship.address);cells.push('\u9001\u4ed8\u5148\u96fb\u8a71:',ship.phone);var values=cells.filter(function(c,i){return i%2===1;});var filled=values.filter(function(v){return v!='';});if(filled.length<=1){var debug=allBlocks.map(function(el){return el.className;}).join('\n');alert('\u53d6\u5f97\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\u3002\n\n\u691c\u51fa\u30d6\u30ed\u30c3\u30af:\n'+debug);return;}var text=cells.join('\t');navigator.clipboard.writeText(text).then(function(){var d=document.createElement('div');d.textContent='\u2713 \u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f';d.style.cssText='position:fixed;top:20px;right:20px;background:#2c2418;color:#d4a574;border:1px solid rgba(212,165,116,0.4);padding:10px 18px;border-radius:6px;font-size:14px;z-index:99999;font-family:sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.2);';document.body.appendChild(d);setTimeout(function(){d.remove();},2200);}).catch(function(){alert(text);});})()</div>
+      <div class="code-block" id="bml-code">javascript:(function(){
+  function t(el){return el?el.textContent.trim().replace(/\s+/g,' '):'';}
+
+  /* 受注番号 */
+  var order = t(document.querySelector('.pull-left li'));
+
+  /* 注文者ブロック — 複数パターンを順に試みる */
+  var buyerBlock =
+    document.querySelector('[class*="rms-content-order-details-block-right"]') ||
+    document.querySelector('[class*="order-details-block-right"]') ||
+    document.querySelector('[class*="contact-block-right"]') ||
+    null;
+
+  /* 全ブロックを取得（送付先特定のため） */
+  var allBlocks = Array.from(
+    document.querySelectorAll('[class*="rms-content-order-details-block"]')
+  );
+  if(!allBlocks.length){
+    allBlocks = Array.from(document.querySelectorAll('[class*="order-details-block"]'));
+  }
+
+  /* buyerBlock が取れなかった場合は allBlocks の最初を使う */
+  if(!buyerBlock && allBlocks.length) buyerBlock = allBlocks[0];
+
+  /* 送付先ブロック = buyerBlock 以外の最初 */
+  var shipBlock = allBlocks.find(function(el){ return el !== buyerBlock; }) || null;
+
+  /* ブロックから各値を取得 */
+  function extract(block){
+    if(!block) return { fullname:'', furigana:'', address:'', phone:'' };
+    var opts = block.querySelector('.rms-content-order-details-contact-options');
+    return {
+      fullname : t(block.querySelector('.fullname')),
+      furigana : t(block.querySelector('.furigana')),
+      address  : t(opts ? opts.querySelector('.address') : block.querySelector('.address')),
+      phone    : t(opts ? opts.querySelector('.phone')   : block.querySelector('.phone'))
+    };
+  }
+
+  var buyer = extract(buyerBlock);
+  var ship  = extract(shipBlock);
+
+  /* ラベルと値を交互に push → タブ区切りで別セルへ */
+  var cells = [];
+  cells.push('\u53d7\u6ce8\u756a\u53f7\uff1a', order);
+  cells.push('\u6ce8\u6587\u8005\uff1a',         buyer.fullname);
+  cells.push('\u6ce8\u6587\u8005\uff08\u30ab\u30ca\uff09\uff1a', buyer.furigana);
+  cells.push('\u6ce8\u6587\u8005\u4f4f\u6240\uff1a', buyer.address);
+  cells.push('\u6ce8\u6587\u8005\u96fb\u8a71\uff1a', buyer.phone);
+  cells.push('\u9001\u4ed8\u5148\uff1a',         ship.fullname);
+  cells.push('\u9001\u4ed8\u5148\uff08\u30ab\u30ca\uff09\uff1a', ship.furigana);
+  cells.push('\u9001\u4ed8\u5148\u4f4f\u6240\uff1a', ship.address);
+  cells.push('\u9001\u4ed8\u5148\u96fb\u8a71\uff1a', ship.phone);
+
+  /* デバッグ: 値がほぼ空なら検出情報を表示 */
+  var filled = cells.filter(function(c, i){ return i % 2 === 1 && c !== ''; });
+  if(filled.length <= 1){
+    var names = Array.from(document.querySelectorAll('[class]'))
+      .map(function(el){ return el.className; })
+      .filter(function(c){ return /order|contact|block|buyer|ship|sender/i.test(c); })
+      .filter(function(c, i, a){ return a.indexOf(c) === i; })
+      .slice(0, 20)
+      .join('\n');
+    alert('\u53d6\u5f97\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\u3002\n\n\u95a2\u9023\u30af\u30e9\u30b9\u540d\uff1a\n' + (names || '\u306a\u3057'));
+    return;
+  }
+
+  var text = cells.join('\t');
+  navigator.clipboard.writeText(text).then(function(){
+    var d = document.createElement('div');
+    d.textContent = '\u2713 \u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f';
+    d.style.cssText = 'position:fixed;top:20px;right:20px;background:#2c2418;color:#d4a574;border:1px solid rgba(212,165,116,0.4);padding:10px 18px;border-radius:6px;font-size:14px;z-index:99999;font-family:sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.2);';
+    document.body.appendChild(d);
+    setTimeout(function(){ d.remove(); }, 2200);
+  }).catch(function(){ alert(text); });
+})();</div>
       <button class="copy-btn" id="copy-code-btn" onclick="copyCode()">コピー</button>
     </div>
   </div>
 
+  <!-- STEP 2 -->
   <div class="section">
     <div class="section-header">
       <span class="step-badge">STEP 2</span>
@@ -348,6 +272,7 @@ kbd {
     </ol>
   </div>
 
+  <!-- STEP 3 -->
   <div class="section">
     <div class="section-header">
       <span class="step-badge">STEP 3</span>
@@ -361,41 +286,41 @@ kbd {
     </ol>
   </div>
 
+  <!-- INFO -->
   <div class="section">
     <div class="section-header">
       <span class="step-badge">INFO</span>
-      <span class="section-title">コピーされる内容</span>
+      <span class="section-title">コピーされる内容と列構成</span>
     </div>
     <table class="info-table">
-      <tr><td>A列</td><td>受注番号:</td><td>B列</td><td>〇〇〇〇〇</td></tr>
-      <tr><td>C列</td><td>注文者:</td><td>D列</td><td>山田 太郎　<span style="font-size:11px;color:var(--ink-faint);">.fullname</span></td></tr>
-      <tr><td>E列</td><td>注文者（カナ）:</td><td>F列</td><td>ヤマダ タロウ　<span style="font-size:11px;color:var(--ink-faint);">.furigana</span></td></tr>
-      <tr><td>G列</td><td>注文者住所:</td><td>H列</td><td>東京都〇〇区...</td></tr>
-      <tr><td>I列</td><td>注文者電話:</td><td>J列</td><td>03-xxxx-xxxx</td></tr>
-      <tr><td>K列</td><td>送付先:</td><td>L列</td><td>鈴木 花子　<span style="font-size:11px;color:var(--ink-faint);">.fullname</span></td></tr>
-      <tr><td>M列</td><td>送付先（カナ）:</td><td>N列</td><td>スズキ ハナコ　<span style="font-size:11px;color:var(--ink-faint);">.furigana</span></td></tr>
-      <tr><td>O列</td><td>送付先住所:</td><td>P列</td><td>大阪府〇〇市...</td></tr>
-      <tr><td>Q列</td><td>送付先電話:</td><td>R列</td><td>06-xxxx-xxxx</td></tr>
+      <tr><td>A列</td><td>受注番号：</td><td>B列</td><td>〇〇〇〇〇</td></tr>
+      <tr><td>C列</td><td>注文者：</td><td>D列</td><td>山田 太郎（.fullname）</td></tr>
+      <tr><td>E列</td><td>注文者（カナ）：</td><td>F列</td><td>ヤマダ タロウ（.furigana）</td></tr>
+      <tr><td>G列</td><td>注文者住所：</td><td>H列</td><td>東京都〇〇区...</td></tr>
+      <tr><td>I列</td><td>注文者電話：</td><td>J列</td><td>03-xxxx-xxxx</td></tr>
+      <tr><td>K列</td><td>送付先：</td><td>L列</td><td>鈴木 花子（.fullname）</td></tr>
+      <tr><td>M列</td><td>送付先（カナ）：</td><td>N列</td><td>スズキ ハナコ（.furigana）</td></tr>
+      <tr><td>O列</td><td>送付先住所：</td><td>P列</td><td>大阪府〇〇市...</td></tr>
+      <tr><td>Q列</td><td>送付先電話：</td><td>R列</td><td>06-xxxx-xxxx</td></tr>
     </table>
     <div style="margin-top:18px;">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase;">コピー結果のイメージ</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase;">貼り付け後のイメージ（→ はセル区切り）</div>
       <div class="preview-box">
-        受注番号: 12345
-        <span style="color:var(--ink-faint);font-size:10px;margin:0 4px;">→TAB→</span>
-        注文者: 山田 太郎
-        <span style="color:var(--ink-faint);font-size:10px;margin:0 4px;">→TAB→</span>
-        注文者（カナ）: ヤマダ タロウ
-        <span style="color:var(--ink-faint);font-size:10px;margin:0 4px;">→TAB→</span>
-        … 以降同様に各セルへ
+        受注番号：<span class="tab-arrow">→</span>12345<span class="tab-arrow">→</span>注文者：<span class="tab-arrow">→</span>山田 太郎<span class="tab-arrow">→</span>注文者（カナ）：<span class="tab-arrow">→</span>ヤマダ タロウ<span class="tab-arrow">→</span>…
       </div>
     </div>
-    <p class="note">※ タブ区切りのためExcelに貼り付けると横一列に各セルへ入ります。<br>※ カタカナ名が取得できない場合はセルが空になります（=で紐付けて補完してください）。<br>※ 取得失敗時はアラートで検出クラス名を表示します（デバッグ用）。<br>※ メーカー情報は後日追加予定です。</p>
+    <p class="note">
+      ※ タブ区切りでExcelに貼り付けると横一列・各セルに分かれて入ります。<br>
+      ※ 取得できなかった項目のセルは空になります。<br>
+      ※ 取得失敗時はアラートに関連クラス名が表示されます（デバッグ用）。<br>
+      ※ メーカー情報は後日追加予定です。
+    </p>
   </div>
 
   <div class="footer">
     <div class="footer-left">
       <span class="footer-logo">OCT</span>
-      <span class="footer-ver">ver 1.4</span>
+      <span class="footer-ver">ver 1.5</span>
     </div>
     <span class="footer-right">Order Copy Tool</span>
   </div>
@@ -403,9 +328,15 @@ kbd {
 </div>
 <script>
 function copyCode() {
-  var code = document.getElementById('bml-code').textContent;
-  var btn  = document.getElementById('copy-code-btn');
-  function onSuccess() {
+  /* コードブロックのテキストを取得してコメント・改行を除去しミニファイ */
+  var raw  = document.getElementById('bml-code').textContent;
+  /* 改行・インデントを除去してブックマークレット用1行に */
+  var code = raw.replace(/\s*\/\*[\s\S]*?\*\/\s*/g, '')  /* コメント除去 */
+               .replace(/\n\s*/g, ' ')                    /* 改行→スペース */
+               .replace(/\s{2,}/g, ' ')                   /* 連続スペース圧縮 */
+               .trim();
+  var btn = document.getElementById('copy-code-btn');
+  function onSuccess(){
     btn.textContent = '✓ コピー済み';
     btn.classList.add('ok');
     setTimeout(function(){ btn.textContent='コピー'; btn.classList.remove('ok'); }, 2200);
