@@ -320,7 +320,7 @@ kbd {
   <div class="footer">
     <div class="footer-left">
       <span class="footer-logo">OCT</span>
-      <span class="footer-ver">ver 1.5</span>
+      <span class="footer-ver">ver 1.6</span>
     </div>
     <span class="footer-right">Order Copy Tool</span>
   </div>
@@ -332,8 +332,8 @@ function copyCode() {
   var raw  = document.getElementById('bml-code').textContent;
   /* 改行・インデントを除去してブックマークレット用1行に */
   var code = raw.replace(/\s*\/\*[\s\S]*?\*\/\s*/g, '')  /* コメント除去 */
-               .replace(/\n\s*/g, ' ')                    /* 改行→スペース */
-               .replace(/\s{2,}/g, ' ')                   /* 連続スペース圧縮 */
+               .replace(/\n[ \t]*/g, ' ')                 /* 改行+インデント→スペース */
+               .replace(/[ ]{2,}/g, ' ')                  /* 連続スペース圧縮（\tは保持） */
                .trim();
   var btn = document.getElementById('copy-code-btn');
   function onSuccess(){
