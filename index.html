@@ -8,16 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600&family=Noto+Sans+JP:wght@400;500&family=DM+Mono:wght@400&family=Barlow+Condensed:wght@200;300&display=swap" rel="stylesheet" />
 <style>
-/*
-  タイポグラフィ階層
-  ──────────────────────────────────────
-  Lv1 — ロゴ           : Barlow Condensed 200
-  Lv2 — セクション見出し : Noto Serif JP 600
-  Lv3 — 手順本文        : Noto Sans JP 400
-  Lv4 — strong/ラベル  : Noto Sans JP 500
-  Lv5 — バッジ/コード   : DM Mono 400
-  Lv6 — 注釈/フッター   : Noto Sans JP 400 + 薄色
-*/
 :root {
   --ivory:     #f8f4ed;
   --ink:       #2c2418;
@@ -45,44 +35,50 @@
 body {
   font-family: var(--sans); font-weight: 400;
   background: var(--ivory); color: var(--ink-mid);
-  min-height: 100vh; padding: 48px 24px 72px;
+  min-height: 100vh; padding: 32px 24px 72px;
   font-size: 14px; line-height: 1.75;
   background-image:
     radial-gradient(ellipse at 15% 0%,   rgba(245,237,224,0.7) 0%, transparent 55%),
     radial-gradient(ellipse at 85% 100%, rgba(232,218,196,0.5) 0%, transparent 50%);
 }
-.wrap { max-width: 660px; margin: 0 auto; display: flex; flex-direction: column; }
+.wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; }
 
 /* Logo */
 .logo-block {
   display: flex; align-items: flex-end; gap: 16px;
-  margin-bottom: 28px; padding-bottom: 28px;
+  margin-bottom: 24px; padding-bottom: 24px;
   border-bottom: 1px solid var(--ink-faint); position: relative;
 }
-.logo-mark {
-  font-family: var(--display); font-weight: 200; font-size: 56px;
-  line-height: 1; letter-spacing: .1em; color: var(--terra); user-select: none;
-}
+.logo-mark { font-family: var(--display); font-weight: 200; font-size: 56px; line-height: 1; letter-spacing: .1em; color: var(--terra); user-select: none; }
 .logo-text-group { display: flex; flex-direction: column; gap: 3px; padding-bottom: 7px; }
-.logo-fullname {
-  font-family: var(--mono); font-weight: 400; font-size: 10px;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); line-height: 1;
-}
+.logo-fullname { font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); line-height: 1; }
 .logo-sub { font-family: var(--sans); font-weight: 400; font-size: 12.5px; color: var(--ink-light); line-height: 1.45; }
-.logo-block::after {
-  content: ''; position: absolute; bottom: -1px; left: 0;
-  width: 48px; height: 2px; background: var(--terra); border-radius: 1px;
+.logo-block::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 48px; height: 2px; background: var(--terra); border-radius: 1px; }
+
+/* =====================================================
+   Tabs
+===================================================== */
+.tab-nav {
+  display: flex; gap: 0; margin-bottom: 28px;
+  border-bottom: 1px solid var(--border-md);
 }
+.tab-btn {
+  font-family: var(--sans); font-weight: 500; font-size: 13px;
+  color: var(--ink-light); background: none; border: none;
+  padding: 9px 20px; cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color .15s, border-color .15s;
+}
+.tab-btn:hover { color: var(--ink-mid); }
+.tab-btn.active { color: var(--terra); border-bottom-color: var(--terra); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 
 /* Section */
-.section { padding: 26px 0; border-bottom: 1px solid var(--border); }
+.section { padding: 24px 0; border-bottom: 1px solid var(--border); }
 .section:last-child { border-bottom: none; }
-.section-header { display: flex; align-items: baseline; gap: 11px; margin-bottom: 16px; }
-.step-badge {
-  font-family: var(--mono); font-weight: 400; font-size: 10px;
-  letter-spacing: .12em; color: var(--surface); background: var(--terra);
-  padding: 2px 9px; border-radius: 999px; flex-shrink: 0;
-}
+.section-header { display: flex; align-items: baseline; gap: 11px; margin-bottom: 14px; }
+.step-badge { font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .12em; color: var(--surface); background: var(--terra); padding: 2px 9px; border-radius: 999px; flex-shrink: 0; }
 .section-title { font-family: var(--serif); font-weight: 600; font-size: 15px; color: var(--ink); letter-spacing: .02em; }
 
 /* Code block */
@@ -97,6 +93,9 @@ body {
 }
 .code-block::-webkit-scrollbar { width: 4px; }
 .code-block::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 2px; }
+.code-block.vba-output {
+  max-height: 320px; font-size: 11px; color: #b8d4a8;
+}
 .copy-btn {
   position: absolute; top: 10px; right: 10px;
   background: var(--terra-bg); color: var(--terra); border: 1px solid var(--terra-bd);
@@ -110,25 +109,19 @@ body {
 /* Steps list */
 .steps-list { list-style: none; display: flex; flex-direction: column; counter-reset: step-counter; }
 .steps-list li {
-  counter-increment: step-counter;
-  display: flex; align-items: flex-start; gap: 14px;
+  counter-increment: step-counter; display: flex; align-items: flex-start; gap: 14px;
   padding: 10px 0; border-bottom: 1px solid var(--border);
   font-family: var(--sans); font-weight: 400; font-size: 13.5px; color: var(--ink-mid); line-height: 1.65;
 }
 .steps-list li:last-child { border-bottom: none; }
 .steps-list li::before {
-  content: counter(step-counter);
-  font-family: var(--mono); font-weight: 400; font-size: 11px;
+  content: counter(step-counter); font-family: var(--mono); font-weight: 400; font-size: 11px;
   color: var(--terra); background: var(--terra-bg); border: 1px solid var(--terra-bd);
   border-radius: 999px; min-width: 22px; height: 22px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
 }
 .steps-list li strong { font-weight: 500; color: var(--ink); }
-kbd {
-  font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-mid);
-  background: var(--surface); border: 1px solid var(--border-md);
-  border-radius: var(--r3); padding: 1px 6px; box-shadow: 0 1px 0 var(--border-md); white-space: nowrap;
-}
+kbd { font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-mid); background: var(--surface); border: 1px solid var(--border-md); border-radius: var(--r3); padding: 1px 6px; box-shadow: 0 1px 0 var(--border-md); white-space: nowrap; }
 
 /* Info table */
 .info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -141,13 +134,7 @@ kbd {
 .info-table td:nth-child(4) { font-family: var(--mono); font-size: 11.5px; color: var(--ink-light); }
 
 /* Preview */
-.preview-box {
-  background: var(--surface); border: 1px solid var(--border);
-  border-left: 3px solid var(--terra); border-radius: 0 var(--r2) var(--r2) 0;
-  padding: 14px 18px; font-family: var(--mono); font-weight: 400; font-size: 12px;
-  color: var(--ink-mid); line-height: 2; box-shadow: var(--shadow-sm);
-  overflow-x: auto; white-space: nowrap;
-}
+.preview-box { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--terra); border-radius: 0 var(--r2) var(--r2) 0; padding: 14px 18px; font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--ink-mid); line-height: 2; box-shadow: var(--shadow-sm); overflow-x: auto; white-space: nowrap; }
 .preview-box .tab-arrow { color: var(--ink-faint); font-size: 10px; margin: 0 3px; }
 
 /* Note / Footer */
@@ -157,27 +144,88 @@ kbd {
 .footer-logo { font-family: var(--display); font-weight: 200; font-size: 18px; letter-spacing: .1em; color: var(--terra); line-height: 1; }
 .footer-ver  { font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-faint); letter-spacing: .06em; }
 .footer-right { font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-faint); }
+
+/* =====================================================
+   VBA Generator Tab
+===================================================== */
+.vba-form { display: flex; flex-direction: column; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-family: var(--sans); font-weight: 500; font-size: 12px; color: var(--ink-light); text-transform: uppercase; letter-spacing: .06em; }
+.form-input {
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--border-md);
+  border-radius: var(--r2); padding: 7px 10px; outline: none;
+  transition: border-color .15s;
+}
+.form-input:focus { border-color: var(--terra); }
+.form-hint { font-size: 11px; color: var(--ink-faint); }
+
+/* List editor */
+.list-editor { display: flex; flex-direction: column; gap: 6px; }
+.list-item {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r2); padding: 6px 10px;
+}
+.list-item span { flex: 1; font-size: 13px; color: var(--ink-mid); }
+.list-item-del {
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-faint); font-size: 14px; padding: 0 4px;
+  transition: color .12s; line-height: 1;
+}
+.list-item-del:hover { color: var(--terra); }
+.list-add-row { display: flex; gap: 8px; }
+.list-add-row input { flex: 1; }
+.btn {
+  font-family: var(--sans); font-weight: 500; font-size: 12px;
+  padding: 7px 14px; border-radius: var(--r2); cursor: pointer;
+  border: 1px solid var(--border-md); background: var(--surface);
+  color: var(--ink-mid); transition: all .15s; white-space: nowrap;
+}
+.btn:hover { background: var(--ivory); color: var(--ink); }
+.btn-terra { background: var(--terra-bg); color: var(--terra); border-color: var(--terra-bd); }
+.btn-terra:hover { background: var(--terra); color: #fff; border-color: var(--terra); }
+.btn-generate {
+  width: 100%; padding: 11px; font-size: 14px;
+  background: var(--terra); color: #fff; border-color: var(--terra);
+  border-radius: var(--r); margin-top: 4px;
+}
+.btn-generate:hover { background: #a04f2e; border-color: #a04f2e; }
+
+/* Cell setting row */
+.cell-row { display: grid; grid-template-columns: 1fr 120px; gap: 10px; align-items: end; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
+  <!-- Logo -->
   <div class="logo-block">
     <div class="logo-mark">OCT</div>
     <div class="logo-text-group">
       <span class="logo-fullname">Order Copy Tool</span>
-      <span class="logo-sub">受注管理画面から情報をコピーするブックマークレット</span>
+      <span class="logo-sub">受注管理画面から情報をコピーするブックマークレット &amp; VBAジェネレーター</span>
     </div>
   </div>
 
-  <!-- STEP 1 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="step-badge">STEP 1</span>
-      <span class="section-title">コードをコピーする</span>
-    </div>
-    <div class="code-wrap">
-      <div class="code-block" id="bml-code">javascript:(function(){
+  <!-- Tab Nav -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('bml')">ブックマークレット</button>
+    <button class="tab-btn" onclick="switchTab('vba')">VBAジェネレーター</button>
+  </div>
+
+  <!-- =====================================================
+       TAB 1: ブックマークレット
+  ===================================================== -->
+  <div class="tab-panel active" id="tab-bml">
+
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">STEP 1</span>
+        <span class="section-title">コードをコピーする</span>
+      </div>
+      <div class="code-wrap">
+        <div class="code-block" id="bml-code">javascript:(function(){
   function t(el){return el?el.textContent.trim().replace(/\s+/g,' '):'';}
 
   /* 受注番号 */
@@ -238,8 +286,7 @@ kbd {
       .map(function(el){ return el.className; })
       .filter(function(c){ return /order|contact|block|buyer|ship|sender/i.test(c); })
       .filter(function(c, i, a){ return a.indexOf(c) === i; })
-      .slice(0, 20)
-      .join('\n');
+      .slice(0, 20).join('\n');
     alert('\u53d6\u5f97\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\u3002\n\n\u95a2\u9023\u30af\u30e9\u30b9\u540d\uff1a\n' + (names || '\u306a\u3057'));
     return;
   }
@@ -253,102 +300,460 @@ kbd {
     setTimeout(function(){ d.remove(); }, 2200);
   }).catch(function(){ alert(text); });
 })();</div>
-      <button class="copy-btn" id="copy-code-btn" onclick="copyCode()">コピー</button>
-    </div>
-  </div>
-
-  <!-- STEP 2 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="step-badge">STEP 2</span>
-      <span class="section-title">ブックマークバーに登録する</span>
-    </div>
-    <ol class="steps-list">
-      <li>ブックマークバーを表示する — <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd></li>
-      <li>ブックマークバーの空白部分を<strong>右クリック → 「ページを追加」</strong>を選択</li>
-      <li><strong>名前</strong>の欄に「受注コピー」などわかりやすい名前を入力</li>
-      <li><strong>URL</strong>の欄に、Step 1 でコピーしたコードを貼り付け</li>
-      <li>「<strong>保存</strong>」をクリックして完了</li>
-    </ol>
-  </div>
-
-  <!-- STEP 3 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="step-badge">STEP 3</span>
-      <span class="section-title">実行する</span>
-    </div>
-    <ol class="steps-list">
-      <li>受注管理システムで<strong>対象の受注詳細ページ</strong>を開く</li>
-      <li>ブックマークバーの「<strong>受注コピー</strong>」をクリック</li>
-      <li>画面右上に「✓ コピーしました」と表示されたら完了</li>
-      <li>貼り付けたい場所で <kbd>Ctrl</kbd> + <kbd>V</kbd></li>
-    </ol>
-  </div>
-
-  <!-- INFO -->
-  <div class="section">
-    <div class="section-header">
-      <span class="step-badge">INFO</span>
-      <span class="section-title">コピーされる内容と列構成</span>
-    </div>
-    <table class="info-table">
-      <tr><td>A列</td><td>受注番号：</td><td>B列</td><td>〇〇〇〇〇</td></tr>
-      <tr><td>C列</td><td>注文者：</td><td>D列</td><td>山田 太郎（.fullname）</td></tr>
-      <tr><td>E列</td><td>注文者（カナ）：</td><td>F列</td><td>ヤマダ タロウ（.furigana）</td></tr>
-      <tr><td>G列</td><td>注文者住所：</td><td>H列</td><td>東京都〇〇区...</td></tr>
-      <tr><td>I列</td><td>注文者電話：</td><td>J列</td><td>03-xxxx-xxxx</td></tr>
-      <tr><td>K列</td><td>送付先：</td><td>L列</td><td>鈴木 花子（.fullname）</td></tr>
-      <tr><td>M列</td><td>送付先（カナ）：</td><td>N列</td><td>スズキ ハナコ（.furigana）</td></tr>
-      <tr><td>O列</td><td>送付先住所：</td><td>P列</td><td>大阪府〇〇市...</td></tr>
-      <tr><td>Q列</td><td>送付先電話：</td><td>R列</td><td>06-xxxx-xxxx</td></tr>
-    </table>
-    <div style="margin-top:18px;">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase;">貼り付け後のイメージ（→ はセル区切り）</div>
-      <div class="preview-box">
-        受注番号：<span class="tab-arrow">→</span>12345<span class="tab-arrow">→</span>注文者：<span class="tab-arrow">→</span>山田 太郎<span class="tab-arrow">→</span>注文者（カナ）：<span class="tab-arrow">→</span>ヤマダ タロウ<span class="tab-arrow">→</span>…
+        <button class="copy-btn" id="copy-bml-btn" onclick="copyBml()">コピー</button>
       </div>
     </div>
-    <p class="note">
-      ※ タブ区切りでExcelに貼り付けると横一列・各セルに分かれて入ります。<br>
-      ※ 取得できなかった項目のセルは空になります。<br>
-      ※ 取得失敗時はアラートに関連クラス名が表示されます（デバッグ用）。<br>
-      ※ メーカー情報は後日追加予定です。
-    </p>
-  </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">STEP 2</span>
+        <span class="section-title">ブックマークバーに登録する</span>
+      </div>
+      <ol class="steps-list">
+        <li>ブックマークバーを表示する — <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd></li>
+        <li>ブックマークバーの空白部分を<strong>右クリック → 「ページを追加」</strong>を選択</li>
+        <li><strong>名前</strong>の欄に「受注コピー」などわかりやすい名前を入力</li>
+        <li><strong>URL</strong>の欄に、Step 1 でコピーしたコードを貼り付け</li>
+        <li>「<strong>保存</strong>」をクリックして完了</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">STEP 3</span>
+        <span class="section-title">実行する</span>
+      </div>
+      <ol class="steps-list">
+        <li>受注管理システムで<strong>対象の受注詳細ページ</strong>を開く</li>
+        <li>ブックマークバーの「<strong>受注コピー</strong>」をクリック</li>
+        <li>画面右上に「✓ コピーしました」と表示されたら完了</li>
+        <li>貼り付けたい場所で <kbd>Ctrl</kbd> + <kbd>V</kbd></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">INFO</span>
+        <span class="section-title">コピーされる内容と列構成</span>
+      </div>
+      <table class="info-table">
+        <tr><td>A列</td><td>受注番号：</td><td>B列</td><td>〇〇〇〇〇</td></tr>
+        <tr><td>C列</td><td>注文者：</td><td>D列</td><td>山田 太郎（.fullname）</td></tr>
+        <tr><td>E列</td><td>注文者（カナ）：</td><td>F列</td><td>ヤマダ タロウ（.furigana）</td></tr>
+        <tr><td>G列</td><td>注文者住所：</td><td>H列</td><td>東京都〇〇区...</td></tr>
+        <tr><td>I列</td><td>注文者電話：</td><td>J列</td><td>03-xxxx-xxxx</td></tr>
+        <tr><td>K列</td><td>送付先：</td><td>L列</td><td>鈴木 花子（.fullname）</td></tr>
+        <tr><td>M列</td><td>送付先（カナ）：</td><td>N列</td><td>スズキ ハナコ（.furigana）</td></tr>
+        <tr><td>O列</td><td>送付先住所：</td><td>P列</td><td>大阪府〇〇市...</td></tr>
+        <tr><td>Q列</td><td>送付先電話：</td><td>R列</td><td>06-xxxx-xxxx</td></tr>
+      </table>
+      <div style="margin-top:18px;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase;">貼り付け後のイメージ（→ はセル区切り）</div>
+        <div class="preview-box">
+          受注番号：<span class="tab-arrow">→</span>12345<span class="tab-arrow">→</span>注文者：<span class="tab-arrow">→</span>山田 太郎<span class="tab-arrow">→</span>…
+        </div>
+      </div>
+      <p class="note">
+        ※ タブ区切りでExcelに貼り付けると横一列・各セルに分かれて入ります。<br>
+        ※ 取得できなかった項目のセルは空になります。<br>
+        ※ 取得失敗時はアラートに関連クラス名が表示されます（デバッグ用）。
+      </p>
+    </div>
+
+  </div><!-- /tab-bml -->
+
+  <!-- =====================================================
+       TAB 2: VBAジェネレーター
+  ===================================================== -->
+  <div class="tab-panel" id="tab-vba">
+
+    <!-- 貼り付けマクロ設定 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">1</span>
+        <span class="section-title">貼り付け先セルの設定</span>
+      </div>
+      <div class="vba-form">
+        <div class="cell-row">
+          <div class="form-group">
+            <label class="form-label">貼り付け先セル（例: A2）</label>
+            <input class="form-input" type="text" id="paste-cell" value="A2" placeholder="A2" />
+            <span class="form-hint">ブックマークレットのデータを貼り付けるセル番地</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">クリア範囲（行）</label>
+            <input class="form-input" type="text" id="clear-row" value="2" placeholder="2" />
+            <span class="form-hint">クリアする行番号</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 枝番設定 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">2</span>
+        <span class="section-title">枝番の設定</span>
+      </div>
+      <div class="vba-form">
+        <div class="cell-row">
+          <div class="form-group">
+            <label class="form-label">枝番表示セル（例: A1）</label>
+            <input class="form-input" type="text" id="edaban-cell" value="A1" placeholder="A1" />
+            <span class="form-hint">66-1、66-2 などが入るセル</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">日付数式セル（例: B1）</label>
+            <input class="form-input" type="text" id="date-cell" value="B1" placeholder="B1" />
+            <span class="form-hint">TODAY()から月日を自動生成</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">枝番の初期値</label>
+          <input class="form-input" type="number" id="edaban-init" value="1" min="1" style="width:100px;" />
+        </div>
+      </div>
+    </div>
+
+    <!-- メーカーリスト -->
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">3</span>
+        <span class="section-title">メーカー名リスト</span>
+      </div>
+      <div class="vba-form">
+        <div class="cell-row">
+          <div class="form-group">
+            <label class="form-label">メーカー表示セル（例: C5）</label>
+            <input class="form-input" type="text" id="maker-cell" value="C5" placeholder="C5" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">メーカー名（よく使うもの）</label>
+          <div class="list-editor" id="maker-list"></div>
+          <div class="list-add-row">
+            <input class="form-input" type="text" id="maker-input" placeholder="メーカー名を入力" />
+            <button class="btn btn-terra" onclick="addItem('maker')">追加</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- よく使うテキストリスト -->
+    <div class="section">
+      <div class="section-header">
+        <span class="step-badge">4</span>
+        <span class="section-title">よく使うテキストリスト</span>
+      </div>
+      <div class="vba-form">
+        <div class="cell-row">
+          <div class="form-group">
+            <label class="form-label">テキスト表示セル（例: D5）</label>
+            <input class="form-input" type="text" id="text-cell" value="D5" placeholder="D5" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">よく使うテキスト</label>
+          <div class="list-editor" id="text-list"></div>
+          <div class="list-add-row">
+            <input class="form-input" type="text" id="text-input" placeholder="テキストを入力" />
+            <button class="btn btn-terra" onclick="addItem('text')">追加</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 生成ボタン -->
+    <div class="section">
+      <button class="btn btn-generate" onclick="generateVBA()">▶ VBAコードを生成する</button>
+    </div>
+
+    <!-- 出力 -->
+    <div class="section" id="vba-output-section" style="display:none;">
+      <div class="section-header">
+        <span class="step-badge">OUT</span>
+        <span class="section-title">生成されたVBAコード</span>
+      </div>
+      <div class="code-wrap">
+        <div class="code-block vba-output" id="vba-output"></div>
+        <button class="copy-btn" id="copy-vba-btn" onclick="copyVBA()">コピー</button>
+      </div>
+      <p class="note">
+        ※ ExcelでAlt+F11を開き、標準モジュールに貼り付けてください。<br>
+        ※ ボタンを右クリック → 「マクロの登録」で各マクロを割り当てます。<br>
+        ※ 日付数式セルには <code style="font-family:var(--mono);font-size:11px;">=TEXT(TODAY(),"M")&amp;TEXT(TODAY(),"D")</code> が自動で入ります。
+      </p>
+    </div>
+
+  </div><!-- /tab-vba -->
 
   <div class="footer">
     <div class="footer-left">
       <span class="footer-logo">OCT</span>
-      <span class="footer-ver">ver 1.6</span>
+      <span class="footer-ver">ver 2.0</span>
     </div>
     <span class="footer-right">Order Copy Tool</span>
   </div>
 
-</div>
+</div><!-- /wrap -->
+
 <script>
-function copyCode() {
-  /* コードブロックのテキストを取得してコメント・改行を除去しミニファイ */
+/* =====================================================
+   Tab Switch
+===================================================== */
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+/* =====================================================
+   Bookmarklet Copy
+===================================================== */
+function copyBml() {
   var raw  = document.getElementById('bml-code').textContent;
-  /* 改行・インデントを除去してブックマークレット用1行に */
-  var code = raw.replace(/\s*\/\*[\s\S]*?\*\/\s*/g, '')  /* コメント除去 */
-               .replace(/\n[ \t]*/g, ' ')                 /* 改行+インデント→スペース */
-               .replace(/[ ]{2,}/g, ' ')                  /* 連続スペース圧縮（\tは保持） */
+  var code = raw.replace(/\s*\/\*[\s\S]*?\*\/\s*/g, '')
+               .replace(/\n[ \t]*/g, ' ')
+               .replace(/[ ]{2,}/g, ' ')
                .trim();
-  var btn = document.getElementById('copy-code-btn');
-  function onSuccess(){
+  copyText(code, 'copy-bml-btn');
+}
+
+/* =====================================================
+   List Editor（メーカー・テキスト共通）
+===================================================== */
+var makers = ['サンプルメーカーA', 'サンプルメーカーB'];
+var texts  = ['〇〇様ご依頼品', '弊社注文分', 'サンプル送付'];
+
+function renderList(type) {
+  var arr  = type === 'maker' ? makers : texts;
+  var el   = document.getElementById(type + '-list');
+  el.innerHTML = '';
+  arr.forEach(function(item, i) {
+    var row = document.createElement('div');
+    row.className = 'list-item';
+    row.innerHTML = '<span>' + escHtml(item) + '</span>'
+      + '<button class="list-item-del" onclick="removeItem(\'' + type + '\',' + i + ')">✕</button>';
+    el.appendChild(row);
+  });
+}
+
+function addItem(type) {
+  var input = document.getElementById(type + '-input');
+  var val   = input.value.trim();
+  if (!val) return;
+  if (type === 'maker') makers.push(val);
+  else texts.push(val);
+  input.value = '';
+  renderList(type);
+}
+
+function removeItem(type, i) {
+  if (type === 'maker') makers.splice(i, 1);
+  else texts.splice(i, 1);
+  renderList(type);
+}
+
+// Enterキーで追加
+document.addEventListener('DOMContentLoaded', function(){
+  ['maker','text'].forEach(function(type){
+    document.getElementById(type + '-input').addEventListener('keydown', function(e){
+      if (e.key === 'Enter') addItem(type);
+    });
+  });
+  renderList('maker');
+  renderList('text');
+});
+
+/* =====================================================
+   VBA Generator
+===================================================== */
+function generateVBA() {
+  var pasteCell  = document.getElementById('paste-cell').value.trim()  || 'A2';
+  var clearRow   = document.getElementById('clear-row').value.trim()   || '2';
+  var edabanCell = document.getElementById('edaban-cell').value.trim() || 'A1';
+  var dateCell   = document.getElementById('date-cell').value.trim()   || 'B1';
+  var edabanInit = document.getElementById('edaban-init').value.trim() || '1';
+  var makerCell  = document.getElementById('maker-cell').value.trim()  || 'C5';
+  var textCell   = document.getElementById('text-cell').value.trim()   || 'D5';
+
+  var makerArr   = makers.map(function(m){ return '        "' + m.replace(/"/g,'""') + '"'; }).join(',\n');
+  var textArr    = texts.map(function(t){ return '        "' + t.replace(/"/g,'""') + '"'; }).join(',\n');
+
+  var code = [
+    "'================================================================",
+    "' OCT — Order Copy Tool  VBAコード  ver 2.0",
+    "' 生成日時: " + new Date().toLocaleString('ja-JP'),
+    "'================================================================",
+    "",
+    "'----------------------------------------------------------------",
+    "' 1. A" + pasteCell + " に貼り付け（上書き）",
+    "'----------------------------------------------------------------",
+    "Sub PasteToCell()",
+    "    Application.ScreenUpdating = False",
+    "    Range(\"" + pasteCell + "\").Select",
+    "    ActiveSheet.Paste",
+    "    Range(\"" + pasteCell + "\").Select",
+    "    Application.ScreenUpdating = True",
+    "End Sub",
+    "",
+    "'----------------------------------------------------------------",
+    "' 2. " + clearRow + "行目をクリア",
+    "'----------------------------------------------------------------",
+    "Sub ClearRow()",
+    "    If MsgBox(\"" + clearRow + "\u884c\u76ee\u306e\u30c7\u30fc\u30bf\u3092\u30af\u30ea\u30a2\u3057\u307e\u3059\u304b\uff1f\", vbYesNo + vbQuestion, \"\u78ba\u8a8d\") = vbYes Then",
+    "        Rows(\"" + clearRow + ":" + clearRow + "\").ClearContents",
+    "        Range(\"" + pasteCell + "\").Select",
+    "    End If",
+    "End Sub",
+    "",
+    "'----------------------------------------------------------------",
+    "' 3. 枝番：増やす / 減らす / クリア",
+    "'    " + edabanCell + " に「月日-枝番」形式で表示（例: 66-1）",
+    "'    " + dateCell   + " に日付数式を設定",
+    "'----------------------------------------------------------------",
+    "Sub EdabanUp()",
+    "    ' 日付セルに数式を設定（未設定の場合）",
+    "    With Range(\"" + dateCell + "\")",
+    "        If .Value = \"\" Or Not Left(.Formula, 1) = \"=\" Then",
+    "            .Formula = \"=TEXT(TODAY(),\"\"M\"\")&TEXT(TODAY(),\"\"D\"\")\"",
+    "        End If",
+    "    End With",
+    "    Dim dateVal As String",
+    "    dateVal = CStr(CLng(Range(\"" + dateCell + "\").Value))",
+    "    Dim current As String",
+    "    current = CStr(Range(\"" + edabanCell + "\").Value)",
+    "    Dim num As Long",
+    "    If current = \"\" Then",
+    "        num = " + edabanInit,
+    "    ElseIf InStr(current, \"-\") > 0 Then",
+    "        num = CLng(Split(current, \"-\")(1)) + 1",
+    "    Else",
+    "        num = " + edabanInit,
+    "    End If",
+    "    Range(\"" + edabanCell + "\").Value = dateVal & \"-\" & num",
+    "End Sub",
+    "",
+    "Sub EdabanDown()",
+    "    Dim current As String",
+    "    current = CStr(Range(\"" + edabanCell + "\").Value)",
+    "    If InStr(current, \"-\") > 0 Then",
+    "        Dim num As Long",
+    "        num = CLng(Split(current, \"-\")(1))",
+    "        If num > 1 Then",
+    "            Dim dateVal As String",
+    "            dateVal = Split(current, \"-\")(0)",
+    "            Range(\"" + edabanCell + "\").Value = dateVal & \"-\" & (num - 1)",
+    "        End If",
+    "    End If",
+    "End Sub",
+    "",
+    "Sub EdabanReset()",
+    "    With Range(\"" + dateCell + "\")",
+    "        If .Value = \"\" Or Not Left(.Formula, 1) = \"=\" Then",
+    "            .Formula = \"=TEXT(TODAY(),\"\"M\"\")&TEXT(TODAY(),\"\"D\"\")\"",
+    "        End If",
+    "    End With",
+    "    Dim dateVal As String",
+    "    dateVal = CStr(CLng(Range(\"" + dateCell + "\").Value))",
+    "    Range(\"" + edabanCell + "\").Value = dateVal & \"-" + edabanInit + "\"",
+    "End Sub",
+    "",
+    "'----------------------------------------------------------------",
+    "' 4. メーカー選択ダイアログ → " + makerCell + " に入力",
+    "'----------------------------------------------------------------",
+    "Sub SelectMaker()",
+    "    Dim makerList As Variant",
+    "    makerList = Array(",
+    makerArr,
+    "    )",
+    "    Dim i As Long",
+    "    Dim msg As String",
+    "    msg = \"メーカーを番号で選択してください：\" & vbCrLf & vbCrLf",
+    "    For i = 0 To UBound(makerList)",
+    "        msg = msg & (i + 1) & \". \" & makerList(i) & vbCrLf",
+    "    Next i",
+    "    msg = msg & vbCrLf & \"0. 直接入力\"",
+    "    Dim ans As String",
+    "    ans = InputBox(msg, \"メーカー選択\")",
+    "    If ans = \"\" Then Exit Sub",
+    "    If ans = \"0\" Then",
+    "        Dim direct As String",
+    "        direct = InputBox(\"メーカー名を入力してください\", \"直接入力\")",
+    "        If direct <> \"\" Then Range(\"" + makerCell + "\").Value = direct",
+    "    ElseIf IsNumeric(ans) Then",
+    "        Dim idx As Long",
+    "        idx = CLng(ans) - 1",
+    "        If idx >= 0 And idx <= UBound(makerList) Then",
+    "            Range(\"" + makerCell + "\").Value = makerList(idx)",
+    "        End If",
+    "    End If",
+    "End Sub",
+    "",
+    "'----------------------------------------------------------------",
+    "' 5. テキスト選択ダイアログ → " + textCell + " に入力",
+    "'----------------------------------------------------------------",
+    "Sub SelectText()",
+    "    Dim textList As Variant",
+    "    textList = Array(",
+    textArr,
+    "    )",
+    "    Dim i As Long",
+    "    Dim msg As String",
+    "    msg = \"テキストを番号で選択してください：\" & vbCrLf & vbCrLf",
+    "    For i = 0 To UBound(textList)",
+    "        msg = msg & (i + 1) & \". \" & textList(i) & vbCrLf",
+    "    Next i",
+    "    msg = msg & vbCrLf & \"0. 直接入力\"",
+    "    Dim ans As String",
+    "    ans = InputBox(msg, \"テキスト選択\")",
+    "    If ans = \"\" Then Exit Sub",
+    "    If ans = \"0\" Then",
+    "        Dim direct As String",
+    "        direct = InputBox(\"テキストを入力してください\", \"直接入力\")",
+    "        If direct <> \"\" Then Range(\"" + textCell + "\").Value = direct",
+    "    ElseIf IsNumeric(ans) Then",
+    "        Dim idx As Long",
+    "        idx = CLng(ans) - 1",
+    "        If idx >= 0 And idx <= UBound(textList) Then",
+    "            Range(\"" + textCell + "\").Value = textList(idx)",
+    "        End If",
+    "    End If",
+    "End Sub"
+  ].join('\n');
+
+  document.getElementById('vba-output').textContent = code;
+  document.getElementById('vba-output-section').style.display = 'block';
+  document.getElementById('vba-output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyVBA() {
+  copyText(document.getElementById('vba-output').textContent, 'copy-vba-btn');
+}
+
+/* =====================================================
+   共通コピー処理
+===================================================== */
+function copyText(text, btnId) {
+  var btn = document.getElementById(btnId);
+  function onSuccess() {
     btn.textContent = '✓ コピー済み';
     btn.classList.add('ok');
-    setTimeout(function(){ btn.textContent='コピー'; btn.classList.remove('ok'); }, 2200);
+    setTimeout(function(){ btn.textContent = 'コピー'; btn.classList.remove('ok'); }, 2200);
   }
-  navigator.clipboard.writeText(code).then(onSuccess).catch(function(){
+  navigator.clipboard.writeText(text).then(onSuccess).catch(function(){
     var ta = document.createElement('textarea');
-    ta.value = code;
+    ta.value = text;
     ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;';
     document.body.appendChild(ta); ta.focus(); ta.select();
-    try { document.execCommand('copy'); onSuccess(); } catch(e){ alert(code); }
+    try { document.execCommand('copy'); onSuccess(); } catch(e){ alert(text); }
     document.body.removeChild(ta);
   });
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
